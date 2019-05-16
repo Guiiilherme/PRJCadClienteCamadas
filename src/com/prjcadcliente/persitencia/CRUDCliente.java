@@ -40,7 +40,7 @@ public class CRUDCliente {
 		// Criação dos objetos para a conexao com o banco de dados
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();// pega a pasta do driver
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/clientedb", "root", "");// Realiza a conexão
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/clientedb?serverTimezone=UTC","root", "");// Realiza a conexão
 																									// do driver
 
 			String consulta = "INSERT INTO tbcliente(nome,email,telefone,idade)values(?,?,?,?)";// Trazer o resultado da
@@ -56,7 +56,7 @@ public class CRUDCliente {
 			int r = pst.executeUpdate();
 
 			if (r > 0)
-				msg = "Cadastro realizo com sucesso";
+				msg = "Cadastro realizado com sucesso";
 			else
 				msg = "Não foi possivel cadastrar";
 
@@ -81,10 +81,10 @@ public class CRUDCliente {
 		// Criação dos objetos para a conexao com o banco de dados
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();// pega a pasta do driver
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/clientedb", "root", "");// Realiza a conexão
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/clientedb?serverTimezone=UTC", "root", "");// Realiza a conexão
 																									// do driver
 
-			String consulta = "UPDATE tbcliente SET nome=?,email=?,telefone=?,idade =?)WHERE id =?";// Trazer o
+			String consulta = "UPDATE tbcliente SET nome=?,email=?,telefone=?,idade=?)WHERE id =?";// Trazer o
 																									// resultado da
 																									// tabela
 
@@ -94,6 +94,7 @@ public class CRUDCliente {
 			pst.setString(2, cliente.getEmail());
 			pst.setString(3, cliente.getTelefone());
 			pst.setInt(4, cliente.getIdade());
+			pst.setInt(5, cliente.getId());
 
 			int r = pst.executeUpdate();
 
@@ -123,14 +124,14 @@ public class CRUDCliente {
 		// Criação dos objetos para a conexao com o banco de dados
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();// pega a pasta do driver
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/clientedb", "root", "");// Realiza a conexão
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/clientedb?serverTimezone=UTC", "root", "");// Realiza a conexão
 																									// do driver
 
-			String consulta = "DELETE FROM TBCCLIENTE WHERE ID=?";// Trazer o resultado da tabela
+			String consulta = "DELETE FROM tbcliente WHERE ID=?";// Trazer o resultado da tabela
 
 			pst = con.prepareStatement(consulta);
 
-			pst.setString(1, cliente.getNome());
+			pst.setInt(1, cliente.getId());
 
 			int r = pst.executeUpdate();
 
@@ -161,7 +162,7 @@ public class CRUDCliente {
 		try {
 			
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/clientedb", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/clientedb?serverTimezone=UTC", "root", "");
 			
 			
 			String consulta = "Select * from tbcliente where nome=?";
@@ -202,7 +203,7 @@ Cliente cliente = new Cliente();
 		try {
 			
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/clientedb", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/clientedb?serverTimezone=UTC", "root", "");
 			
 			
 			String consulta = "Select * from tbcliente where id=?";
@@ -246,7 +247,7 @@ List<Cliente> lista = new ArrayList<Cliente>();
 		try {
 			
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/clientedb", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/clientedb?serverTimezone=UTC", "root", "");
 			
 			
 			String consulta = "Select * from tbcliente";
