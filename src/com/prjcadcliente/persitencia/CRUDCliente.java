@@ -197,7 +197,47 @@ public class CRUDCliente {
 	}
 
 	public Cliente PesquisarPorId(int id) {
-		return null;
+Cliente cliente = new Cliente();
+	
+		try {
+			
+			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/clientedb", "root", "");
+			
+			
+			String consulta = "Select * from tbcliente where id=?";
+			
+			pst = con.prepareStatement(consulta);
+			
+			pst.setInt(1, id);
+			
+			rs = pst.executeQuery();
+			
+			/*
+			 * vamos pegar um cliente por vez que esta no rs e adiciona lo 
+			 * a lista de pegar clientas para enta retornala
+			 */
+			
+			if(rs.next()) {
+				cliente.setId(rs.getInt(0));
+				cliente.setNome(rs.getString(1));
+				cliente.setEmail(rs.getNString(2));
+				cliente.setTelefone(rs.getNString(3));
+				cliente.setId(rs.getInt(4));
+			}
+		}//FIM DO TRY
+		catch(SQLException ex) {
+			ex.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {con.close();} catch(Exception e) {e.printStackTrace();}
+		}
+		
+		
+		
+		return cliente;
 	}
 
 	public List<Cliente> PesquisarTodos() {
